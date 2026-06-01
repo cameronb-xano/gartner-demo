@@ -1,0 +1,27 @@
+.DS_Store
+
+# Local environments and dependencies
+.venv/
+.venv-*/
+**/.venv/
+node_modules/
+
+# Environment and secret material
+.env
+.env.*
+!.env.example
+demo/secrets/
+*.pem
+*.key
+
+# Python/tooling caches
+__pycache__/
+.pytest_cache/
+*.pyc
+
+# Frontend build artifacts
+frontend/dist/
+*.tsbuildinfo
+
+# Large raw media; generated transcript outputs are tracked instead
+transcripts/*.mp4

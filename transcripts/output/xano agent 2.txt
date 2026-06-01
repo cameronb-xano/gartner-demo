@@ -1,0 +1,63 @@
+We're going to restart this just once more. Yeah, awesome. We'll get started building with the Xano
+agent. But before we do that, Kelly, I want to show the audience what we've already built with the
+Xano agent. We'll see some groups, and we'll see some tables. If we click into the group here, our
+medical group, we'll see endpoints for our medical records, our patients, as well as our users. If
+we go to our tables, we'll see our medical record, patient, and user table.
+
+All of this has already been created through the Xano agent, this big purple button in the top left.
+I'll click it, and we can see the prompt I passed in: "Build me the basis of a HIPAA application."
+So very bare bones, very basic. Just prior to this, I had created what we just saw. Now we're going
+to pass in this prompt, and I'm passing it in with the Xano and Google Gemini agent.
+
+If you want to get started for free, just like me, head to Xano and start building. What we're
+seeing right off the bat is that it's going to start searching the files. It's going to start reading
+through our workspace. It's also going to make sure that, according to the docs, it is building the
+appropriate and correct syntax. Unlike the siloed nature of what we previously had with our agents,
+or I should say assistants, our database assistant and our logic assistant, we now have a fully
+comprehensive agent that builds everything from your APIs to your databases, middleware, and more,
+because it understands the entire workspace context.
+
+Another very cool part about this is that it keeps the human in the loop. What we're seeing is this
+RBAC implementation plan. We'll use the middleware attribute directly on the query block, if valid.
+It gives us these options: attach middleware to the API group level, so it applies to all endpoints
+in a group, or use `middleware.run` inside the endpoint stack, if valid. It's giving us a couple of
+different options. We'll stick with this, approve, and submit. Again, it's keeping the human in the
+loop and making sure that we're aware of the plan before it starts building.
+
+Another thing that I really love about what we've done here at Xano, within this platform, is that
+we've brought the IDE experience to Xano. Like Cursor, VS Code, or any kind of IDE, we have our file
+tree on the left-hand side. We can see, with these green folders, or files I suppose, what's been
+added. Here's the XanoScript. Of course, errors are never too fun to see, but the really cool part is
+that, if it doesn't self-correct, we can fix it with the Xano agent here.
+
+Another really cool part about this entire process is the ability to go through the stack and see
+things visually, and of course the canvas, to see how it's thinking and how it's building. All of
+these different visualizations help you understand your code. Not only do we see it create, but we
+also see it update. These purple bits here show updates. The best way, especially for middleware, is
+to go into that XanoScript and see the middleware updating. Now, it didn't self-fix, so let's fix it
+with this Xano agent. Again, this is another very powerful feature to ensure that your code is going
+to work, instead of just writing it, trying to test it, and having it error.
+
+We'll give it a couple of moments. It fixed it, and it's validating it now. Over here within our
+chat, we can see that it's telling us what it did. We're never really out of the loop, whether it's
+visual or text. We have the ability to stay on top of what it's producing. We'll review these changes.
+We get this beautiful diff here. We can see the middleware being applied. For any file, we'll see a
+big green chunk of everything that was created. It's going to have this precondition, making sure
+that the author, or the user, exists. From there, it's going to select the roles.
+
+Let's see. It's saying that, for user management and admin-only access, it's going to look at the URL
+parameters. This is if it is coming from an external request. Let's see how this works. We'll publish
+to our drafts. Before we even begin, real quick, our data: that's me as the provider. Perfect. As a
+patient, we have Chris. Amazing. We're going to head over to our APIs and post a medical record. I'm
+going to select my auth token. Chris's ID is one. Let's say it's a visit, and the content is
+"healthy and cool."
+
+We'll click run, and we can see that it posted. Let's activate this debugger, and we can see that
+it's going to step through everything. What it's going to do is check whether or not we're an admin.
+Then it's going to check if we're a provider, and we are a provider, so it automatically says,
+"Great, let's return that and create that record." We get to see our new record created here.
+
+This variable is now returned in our response, and in our debugger we have the ability to see this.
+From beginning to end, at least with the Xano agent, it is very, very simple and very, very effective
+at being able to do what you want. This is just the very first thing we've done with the Xano agent,
+and in just a moment, I'll show you the CLI.

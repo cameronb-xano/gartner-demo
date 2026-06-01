@@ -1,0 +1,129 @@
+Go ahead. Perfect. So yeah, let's go ahead and get started with the Xano CLI. Off the bat, it's a
+little bit different than the Xano agent. Of course, we're building with an agent, and we're also
+using the Xano developer MCP for docs and syntax, but it's different in almost every other way.
+Here, we're in our own IDE of choice: Cursor, VS Code, Claude Code, and even before this, I went
+ahead and authenticated the CLI. I downloaded it, installed it, authenticated my account, and
+connected to my instance. What's super cool about this is that you can connect to any instance. It's
+not like it used to be, where you had to grab a metadata token for each instance and create an MCP
+server. It's streamlined and much, much simpler.
+
+I have this very big prompt here. I'm going to send it through, and we'll dissect it. What are we
+doing? Well, we're pulling everything in first. You'll notice that, in my local directory, I don't
+have any workspace files, but that will change in just a second as it pulls from my workspace. And
+here we are: the APIs that we built, our medical group, our middleware, and our tables. Everything
+that we just built with the Xano agent is now here in our CLI. Of course, we can pull, we can push,
+and we can do some really cool things with the CLI tool. In fact, the CLI has a bunch of unique
+feature flags that allow us to do a lot of very cool things.
+
+Let's go ahead and see what we're doing. Before we even begin building, I am letting the agent know:
+"I have other files. Go ahead and look through them, see if you can see XanoScript, and use those to
+help build." The cool part about this being local on my system is that it has all these other project
+files. The more information it has, the better decisions it can make. But what are we actually
+building? That's the question. We want to bring life to the application that we're building. We want
+to enhance it. Right now, it doesn't have audit logging, and it doesn't have PHI encryption, so we're
+going to build that.
+
+This prompt is pretty big. You could say verbose. But before we even start dissecting it, I will say
+that, regardless of the model you're using, whether it's a frontier model or not, the more
+information you give it, the better the output. I'm saying: add an audit log table, and also add some
+functions. I want an `audit/write` function for that audit log table. I want to encrypt and decrypt
+my PHI data. I want to make sure that we're calling this function on endpoints touching user,
+patient, or medical record data. Also, for PHI data, we're going to store it in this `_enc` field.
+That's just a naming convention, a suffix we're adding to the column. Decrypt PHI only when building
+API responses, and do not log plain PHI.
+
+Perfect. Then I have some additional encryption rules. This is to say that I'm prompting this in the
+way that I would build. I'm catching edge cases and making sure that it is going to build as
+concisely as possible. Don't generate what it doesn't need. Use plain Base64 only; do not use
+Base64 URL. Then, more or less the same thing for `encrypt_phi`: return `null` when input is `null`,
+encrypt with the security dot using AES-256, and then you'll see the environment PHI encryption key
+and environment PHI encryption IV. Perfect.
+
+I've included this here because we're able to write environment variables to Xano with the CLI tool,
+which is an amazing feature that hasn't previously existed. Now, when it comes to building, we can
+take a very hands-off approach. We can write all of our logic and our tables, but also our
+environment variables that we can then use in our functions. Continuing on with my `decrypt_phi`
+rules, it's going to operate the same way, of course. Then I have some audit logging rules:
+metadata needs to be JSON, don't insert raw text directly into the audit log metadata, etc. You'll
+also see seed data rules. What is really cool here is that I can seed data in my push. I'll push into
+a workspace, but I can include data with it.
+
+Why is this important? It's especially important if we're dealing with a sandbox. That's what we're
+going to do: create this and push it to our sandbox environment, meaning it's ephemeral. It's not
+going to touch prod. It's not going to touch the live data. That's exciting because it gives us an
+additional layer of security when we develop. Whether you're a team of engineers or you're developing
+solo, whether your application has one user or 10,000 users, we don't want to push something that
+will break prod and create a bad experience. So we have this safeguard in place: sandbox-only mode.
+We can push everything to our sandbox. You still can absolutely push directly to prod, to the live
+branch, if you want to. Not a problem. The CLI fully supports that.
+
+What you'll notice is that we're including these flags: the environment, the records, the dry run,
+and we're going to push with no GUIDs. I have a bunch of different things that I've articulated. I've
+absolutely spoken to the agent to figure out the best prompt, and I would recommend doing the same:
+rubber-ducking with the agent, going back and forth. If any import fails, go ahead and follow these
+instructions. From beginning to end, what I'm saying is, "This is how I think. This is how I build.
+Go ahead and build it like this." And, as we've been talking, that's exactly what it's been doing.
+
+It's been modifying these tables. We can see removing and adding. It's added the audit log. It's
+created the functions. Now it's been going through these individual endpoints and ensuring that it's
+adding our `audit/write` function. Perfect. Even before this, we were changing a bunch. As we go
+through all the way down, we'll also notice that validation has been caught. The CLI is going to
+validate the XanoScript, which is always exciting. It doesn't matter if you're using a frontier model
+or not; we have the ability to make sure that the code we're testing, either in prod or within the
+sandbox, is going to be valid.
+
+That's what we're seeing here. The human in the loop is still 100%. Absolutely, very important. We're
+able to catch it, of course. Look how fast it brings up our sandbox environment. Now I want to go
+back real quick to our IDE, because it's still going to be thinking. Let's see. It succeeded, and the
+review session opened. I'm doing one quick pullback check from the sandbox so I can confirm what the
+sandbox now contains before I wrap up. Then I might catch another thing and, of course, push another
+bit. It lets us know everything that's done: added the audit log, added the functions, and added the
+plain text PHI encryption key, encryption environment, and variable.
+
+If we go back here and click on our keys, here are environment variables that didn't exist when we
+were creating with the Xano agent, but do now with the CLI tool. What I want to see is our data. Here
+we don't have any user data, but it looks like we do have patient data. Perfect. Medical record, etc.
+Let's do something here. Actually, let's not do it from the database. Let's go to our APIs, go to our
+authentication, and sign up. I'll click run. This is me, this is my email, and that's a password.
+I'll click run, and it works.
+
+We can see that it's going to encrypt that PHI and write to the audit log. So if I go to my database
+and then to my audit log, I can see that this is me. It includes the data that it had. We'll remove
+those from previous sandbox runs. We should also be able to see some of the user data from me signing
+up. I'm going to create myself as a provider real quick. So we have the name and the email encrypted;
+we can't see that personal data. Let's do one additional test. We'll create a medical record. Well,
+first, let's create a patient. That's what we should do.
+
+Let's click run. I'll select myself, and we'll pass in our subject, Chris, who was so gracious to let
+us use himself. We'll click run, and we get this data back. Everything has been encrypted, and we can
+see that in the functions and written to our audit. Going back to our audit, perfect, that's a create.
+Amazing. We can take a look at the patient we created, which is Chris. We can say that this is
+working the way we wanted it to work. Of course, you can do more testing, but I want to show you one
+of the more powerful features that exists here.
+
+Of course, everything here has been powerful so far, but I want to show you Review and Push. I'm
+going to click this button in the top right. It's going to take everything that exists in this
+ephemeral bit and put it on the actual workspace that we built with our Xano agent. We'll review
+changes and take a quick look. We have this beautiful diff here, allowing us to see all of the
+changes. It's acting as the human in the loop, but also giving us that visualization of anything and
+everything that's changed, and providing that confidence.
+
+Let's sign off on this. We'll say next, and we're going to push this to branch 2. We have the ability
+to set it as a live branch, but we'll just push it here. I'll deploy, and perfect: we're no longer in
+that ephemeral workspace. You can see that the banner is gone. We are now where we want to be. If we
+go to our APIs, we can see that everything exists here. But what's important is that we double-check
+our functions. Our functions exist. Perfect. If we go to our crypto, perfect, it exists in all these
+endpoints. I will need to set these environment variables, but ultimately it's assuming more or less
+that you do have them. If you don't, just go back to the Xano ephemeral environment and add them.
+
+Last but not least, we can manage these branches and merge them. We'll select v2 and choose the
+destination as v1, which means we're going to have everything. I will say that we are looking at
+destination drafts, so we'll include all of these. If it says it isn't able to merge, that's not a
+problem. If a source or destination branch contains unpublished drafts, we still need to go there.
+Simple. Very easy with what we've done.
+
+Let's click on v1. Actually, I should click on publish. I can review and publish these changes, so
+I'll publish them. Not a problem. I'll go back to v2, go back to manage branch, and merge my branch
+from v2 to v1. Now I have all of my selections. I'll click merge, and now v1 is going to have
+everything that we just built with the Xano CLI. It's pretty powerful. It has a bunch of features
+that you can leverage to build securely and confidently. This is the future. This is Xano.

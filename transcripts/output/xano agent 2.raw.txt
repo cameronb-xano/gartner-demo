@@ -1,0 +1,96 @@
+We're going to go ahead and restart this just once more and we'll go ahead and yeah, awesome.
+We'll go ahead and get started building with the Xanoagent.
+But before we do that, Kelly, I do want to show the audience what we've already built
+with the Xanoagent and we'll see some groups, we'll see some tables.
+And if we click in the group here, our medical group, we'll see credit points
+for our medical records, our patients, as well as our users.
+And if we go to our tables, we'll see our medical record, patient, and user table.
+So all of this already having been created through this Xanoagent, this big purple button
+in the top left, I'll go ahead and click it and we can see the prompt I passed in.
+Build me the basis of a HIPAA application.
+So very bare bones, very basic.
+But just prior to this, I'd created what we had just seen.
+And now we're going to go ahead and pass in this prompt.
+And I'm passing it in with the Xano and Google Gemini agent.
+So if you want to go ahead and get started for free, just like me, go ahead,
+head to Xano and start building.
+And what we're seeing right off the bat is it's going to start searching the files.
+It's going to start reading through our workspace.
+It's also going to be making sure that according to the docs, it is building
+the appropriate and correct syntax.
+So unlike say the siloed nature of what we had previously with our, our agents,
+or I should say assistants, our database assistant, our logic assistant.
+Now we have a fully comprehensive agent that builds everything from your
+APIs to your databases, to your middleware and more, because it understands
+the entire workspace context.
+Now, another very cool part about this is that it keeps the human in the loop.
+So what we're seeing is this RBAC implementation plan.
+We'll use the middleware attribute directly on the query block if valid.
+And it gives us these options, uh, attach middleware to the API group level.
+So it applies to all endpoints in a group, um, or use middleware dot
+run inside the end point stack if valid.
+So it's giving us just a couple of different options.
+We'll stick with this and we'll go ahead and approve and then submit.
+So again, keeping the human in the loop, making sure that we're aware of the
+plan before it starts building.
+Um, but another thing that I really, really just actually love about what
+we've done here at Xano within this platform is we've brought the IDE
+experience to Xano.
+So like cursor, um, you know, like, uh, VS code, like any kind of IDE, we have
+our file tree on the left-hand side and we can see with these green, uh, folders
+here or files, I suppose, uh, we get to see what's added and here's the Xano
+script and of course, this isn't always fun to see errors are never too fun to
+see, but the really cool part about this is if it doesn't self correct, we can go
+ahead and fix with the Xano agent here.
+Now, another really cool part about this entire process is the ability to go
+through the stack and see things visually.
+And of course the campus to see how it's thinking, how it's building.
+So all of these different kinds of, you know, visualizations
+to understand your code.
+Not only do we see it create, but we also see it update.
+So these purple bits here, we'll see it update.
+And the best way for especially middleware is to go into that Xano
+script and see the middleware here updating.
+Now it didn't self fix.
+So let's just go ahead and fix it with this Xano agent.
+Again, just another very powerful feature to ensure that your code is
+going to work instead of just writing it and then trying to test it and it
+erroring.
+So, uh, we'll give it just a couple of moments and it fixed it and, um, it's
+validating it now, uh, but we can see over here within our chat, it's just
+telling us what it did.
+So we're never really out of the loop, whether it's visual, whether it's text.
+We just have the ability to, of course, stay on top of what it's producing.
+So we'll review these changes.
+We get this beautiful diff here.
+We get to see the middleware being applied.
+And of course, for any file, we'll see a big green chunk of
+everything that is created.
+Um, so it's going to have this precondition, making sure that the author
+or that the user exists.
+Um, and from there, it's going to go ahead and select the roles.
+We're going to go ahead and, um, uh, let's see.
+So it's saying that the user management, um, for admin only, let's say it's
+going to be taking a look at the URL, uh, parameters.
+So this is going to be, if it is, of course, coming from an external request,
+so let's see how this works here.
+We'll publish to our drafts.
+And before we even begin real quick, our data, that's me as the provider, perfect.
+And as a patient, we have Chris amazing.
+We're going to go ahead now and head over to our APIs.
+We're going to go ahead and, uh, let's go ahead and post a medical record.
+So I'm going to select my auth token.
+Chris's ID one, let's say is a visits and the content is healthy and cool.
+So we'll go ahead and click run and we can see that it posted.
+Uh, let's go ahead and activate this debugger and we can see that it's
+actually going to go ahead and step through everything.
+So, um, what it's going to do is it's going to check whether or not, of course,
+we're an admin and, uh, then it's going to check if we're a provider and we are
+a provider, so it automatically says, great, let's return that and create that record.
+So we get to see our new record created here.
+This variable is now returned in our response and in our debugger, we
+have the ability to see this.
+And so from beginning to end, at least with the Xano agent, it is very, very
+simple and very, very effective at being able to do what you want.
+So, um, and this is just, of course, the very first thing that we've done
+with the Xano agent and in just a moment, I'll show you the CLI.

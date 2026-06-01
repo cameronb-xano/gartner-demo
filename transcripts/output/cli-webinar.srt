@@ -1,0 +1,612 @@
+1
+00:00:00,000 --> 00:00:08,840
+go ahead and perfect so yeah let's go ahead and get started with the Zano CLI
+
+2
+00:00:08,840 --> 00:00:13,480
+and well off the bat it's just a little bit different than the Zano agent now of
+
+3
+00:00:13,480 --> 00:00:17,320
+course we're building with an agent and we're also using the Zano developer
+
+4
+00:00:17,320 --> 00:00:21,760
+MCP for docs and syntax but it's almost different in every other way you can see
+
+5
+00:00:21,760 --> 00:00:26,880
+here we're in our own IDE of choice cursor VS code cloud code and even
+
+6
+00:00:26,880 --> 00:00:30,520
+before this I went ahead and authenticated that CLI I downloaded it
+
+7
+00:00:30,520 --> 00:00:34,280
+installed it I authenticated my account connected to my instance and what's
+
+8
+00:00:34,280 --> 00:00:38,600
+super cool about this is you can connect to any instance so it's not just grab a
+
+9
+00:00:38,600 --> 00:00:42,360
+metadata token for each instance and create an MCP server like it used to be
+
+10
+00:00:42,360 --> 00:00:47,000
+it's streamlined much much more simple so I have this very big prompt here I'm
+
+11
+00:00:47,000 --> 00:00:51,240
+gonna go ahead and send it through and we'll dissect it so what are we doing
+
+12
+00:00:51,240 --> 00:00:55,120
+well we're pulling everything in first you'll notice in my local directory I
+
+13
+00:00:55,120 --> 00:00:59,880
+don't have any workspace files but that'll change in just a second as it of
+
+14
+00:00:59,880 --> 00:01:04,540
+course pulls from my workspace and here we are our API's that we built so our
+
+15
+00:01:04,540 --> 00:01:08,600
+medical group our middleware our table so everything that we just built with
+
+16
+00:01:08,600 --> 00:01:14,480
+the Zano agent is now here in our CLI now of course we can pull we can push
+
+17
+00:01:14,480 --> 00:01:18,560
+and we can do some really cool things with the CLI tool in fact the CLI has a
+
+18
+00:01:18,560 --> 00:01:23,200
+bunch of unique feature flags that allow us to do a bunch of very cool things and
+
+19
+00:01:23,200 --> 00:01:27,440
+let's go ahead and see what we're doing so before we even begin building I am
+
+20
+00:01:27,440 --> 00:01:32,680
+letting the agent know here I have other files go ahead and look through and see
+
+21
+00:01:32,680 --> 00:01:37,200
+if you can see Zano script and use those to help build the cool part about this
+
+22
+00:01:37,200 --> 00:01:42,000
+being local on my system is that it of course has all these other project files
+
+23
+00:01:42,000 --> 00:01:46,040
+so the more information the better decisions it can make but what are we
+
+24
+00:01:46,040 --> 00:01:50,320
+actually building that's the question of course well we want to go ahead and
+
+25
+00:01:50,320 --> 00:01:53,720
+bring life to that the application that we're building we want to go ahead and
+
+26
+00:01:53,720 --> 00:01:57,520
+enhance it right now it doesn't have audit logging and it doesn't have PHI
+
+27
+00:01:57,520 --> 00:02:01,840
+encryption so we're gonna go ahead and build that now this prompt is pretty big
+
+28
+00:02:01,840 --> 00:02:07,080
+it's you could say verbose but before we even start dissecting it I will say
+
+29
+00:02:07,080 --> 00:02:10,400
+regardless of the model you're using whether it's a front-tier model or not
+
+30
+00:02:10,400 --> 00:02:15,440
+the more information you give it the better that output so I'm saying add an
+
+31
+00:02:15,440 --> 00:02:19,360
+audit log table and also go ahead and add some functions I want an audit slash
+
+32
+00:02:19,360 --> 00:02:23,920
+right for that audit log table I want to go ahead and encrypt and decrypt my PHI
+
+33
+00:02:23,920 --> 00:02:27,320
+data I want to go ahead and make sure that we're calling this function on
+
+34
+00:02:27,320 --> 00:02:32,560
+endpoints touching user patient or medical record data also of course for
+
+35
+00:02:32,560 --> 00:02:37,840
+PHI data we're gonna store it in this underscore ENC field and that's just a
+
+36
+00:02:37,840 --> 00:02:42,160
+naming convention a suffix we're adding to the column decrypt PHI only when
+
+37
+00:02:42,160 --> 00:02:48,960
+building API responses and do not log plain PHI perfect so then I have some
+
+38
+00:02:48,960 --> 00:02:52,480
+additional encryption rules and and this is to say that I'm going ahead and
+
+39
+00:02:52,480 --> 00:02:55,520
+prompting this in the way that I would go ahead and build I'm catching edge
+
+40
+00:02:55,520 --> 00:03:00,160
+cases I'm making sure that it is going to build as well concisely as possible
+
+41
+00:03:00,160 --> 00:03:04,760
+so don't generate you know what it doesn't need to go ahead and use plain
+
+42
+00:03:04,760 --> 00:03:11,280
+base 64 only do not use base 64 URL and then the same thing more or less for the
+
+43
+00:03:11,280 --> 00:03:16,260
+encrypt PHI return null when input is null encrypt with the security dot
+
+44
+00:03:16,460 --> 00:03:23,060
+using AES 256 and then you'll see here the environment PHI encryption key
+
+45
+00:03:23,060 --> 00:03:30,580
+environment PHI encryption IV perfect that's maybe something that well what
+
+46
+00:03:30,580 --> 00:03:34,580
+I'll say is I've included this here because we're able to write environment
+
+47
+00:03:34,580 --> 00:03:39,540
+variables to Xano with the CLI tool which is of course an amazing feature
+
+48
+00:03:39,540 --> 00:03:45,060
+that hasn't previously existed so now a very hands-off kind of approach when it
+
+49
+00:03:45,060 --> 00:03:49,340
+comes to building we can go ahead and write all of our logic our tables but
+
+50
+00:03:49,340 --> 00:03:53,980
+also our environment variables that we can use then in our functions so
+
+51
+00:03:53,980 --> 00:03:57,500
+continue on with my decrypt PHI saying you know it's gonna operate the same
+
+52
+00:03:57,500 --> 00:04:01,860
+way of course and then I have some audit logging rules metadata it needs to be
+
+53
+00:04:01,860 --> 00:04:07,260
+JSON don't insert raw text directly into the audit log metadata etc but you'll
+
+54
+00:04:07,260 --> 00:04:11,780
+also see seed data rules so what this is really cool and what it's doing is I can
+
+55
+00:04:11,780 --> 00:04:15,700
+go ahead and seed data in my push so I'll go ahead and push into a workspace
+
+56
+00:04:15,700 --> 00:04:20,500
+but I can include data with it now why is this important well it's important
+
+57
+00:04:20,500 --> 00:04:24,620
+especially if we're dealing with a sandbox and that's what we're going to
+
+58
+00:04:24,620 --> 00:04:27,980
+be doing we're gonna go ahead and create this and we're gonna push it to our
+
+59
+00:04:27,980 --> 00:04:31,220
+sandbox environment meaning it's gonna be ephemeral and it's not gonna touch
+
+60
+00:04:31,220 --> 00:04:36,020
+prod it's not gonna touch the live data and it's exciting because what this
+
+61
+00:04:36,020 --> 00:04:40,500
+really means is it's an additional layer of security for when we develop whether
+
+62
+00:04:40,500 --> 00:04:43,780
+you're a team of engineers or whether you're solo developing if you have an
+
+63
+00:04:43,780 --> 00:04:47,740
+application with one user 10,000 users we don't want to push something that
+
+64
+00:04:47,740 --> 00:04:52,580
+will break prod and make the experience bad so we have of course this
+
+65
+00:04:52,580 --> 00:04:56,380
+safeguard in place a sandbox only mode so we can go ahead and push everything
+
+66
+00:04:56,380 --> 00:05:02,300
+to our sandbox now you still absolutely can push directly to prod to the live
+
+67
+00:05:02,300 --> 00:05:07,940
+branch if you want to not a problem the CLI fully supports that but what you'll
+
+68
+00:05:07,940 --> 00:05:12,460
+notice is that we're including these flags the environment the records the
+
+69
+00:05:12,460 --> 00:05:16,620
+dry run we're gonna go ahead and push with no GU IDs we have a bunch of
+
+70
+00:05:16,620 --> 00:05:20,660
+different things that I've gone ahead and articulated now I have absolutely
+
+71
+00:05:20,660 --> 00:05:24,980
+spoken to the agent to figure out the best prompt and I would recommend doing
+
+72
+00:05:24,980 --> 00:05:29,500
+the same rubber ducking with the agent going back and forth and then you know
+
+73
+00:05:29,500 --> 00:05:34,620
+if any import fails go ahead and follow these instructions so from beginning to
+
+74
+00:05:34,660 --> 00:05:38,500
+end what I'm saying is this is how I think this is how I build go ahead and
+
+75
+00:05:38,500 --> 00:05:42,540
+build it like this and as we've been talking that's exactly what it's been
+
+76
+00:05:42,540 --> 00:05:47,740
+doing it's been modifying these tables we can see removing and adding it's
+
+77
+00:05:47,740 --> 00:05:51,940
+added the audit lock it's gone ahead and created the functions we'll see now it's
+
+78
+00:05:51,940 --> 00:05:55,580
+it's been going through these individual endpoints and ensuring that it's been
+
+79
+00:05:55,580 --> 00:06:01,460
+adding we can see here our function audit right perfect and even before this
+
+80
+00:06:01,460 --> 00:06:06,700
+it just we're changing a bunch right so as we go through all the way down we'll
+
+81
+00:06:06,700 --> 00:06:12,140
+also notice let's see here validation has been caught so the CLI is going to
+
+82
+00:06:12,140 --> 00:06:15,780
+validate the Xanoscript which is always exciting it doesn't matter if you're
+
+83
+00:06:15,780 --> 00:06:19,780
+using a frontier model or not we have the ability to make sure that the code
+
+84
+00:06:19,780 --> 00:06:24,300
+that we are going to be testing either in prod or either within the sandbox is
+
+85
+00:06:24,300 --> 00:06:32,980
+going to be valid and that's what we're seeing here yeah the human in the loop
+
+86
+00:06:32,980 --> 00:06:37,860
+still 100% yep absolutely very important we're able to catch it of course and
+
+87
+00:06:37,860 --> 00:06:42,500
+look how fast it just brings up our sandbox environment now I want to go
+
+88
+00:06:42,500 --> 00:06:46,380
+back real quick here to our IDE it's because it's still gonna be thinking and
+
+89
+00:06:46,380 --> 00:06:50,300
+let's see so it succeeded the review session opened I'm doing one quick
+
+90
+00:06:50,300 --> 00:06:54,180
+pullback check from the sandbox so I can confirm what the sandbox now contains
+
+91
+00:06:54,180 --> 00:06:57,820
+before I wrap up then I might catch another thing and then of course push
+
+92
+00:06:57,820 --> 00:07:01,540
+another bit but it does let us know everything that's done added the
+
+93
+00:07:01,540 --> 00:07:04,980
+autolog added the functions added the plain text phi encryption key and
+
+94
+00:07:04,980 --> 00:07:08,380
+encryption environment and variable so if we go back here click on our keys
+
+95
+00:07:08,380 --> 00:07:12,340
+here are environment variables that didn't exist when we were creating with
+
+96
+00:07:12,340 --> 00:07:17,380
+the Xano agent but that do now with of course the CLI tool what I want to go
+
+97
+00:07:17,380 --> 00:07:22,700
+and see is our data here we don't have any user data it looks like we do have
+
+98
+00:07:22,700 --> 00:07:26,780
+patient data perfect medical record etc so let's do something here let's go
+
+99
+00:07:26,780 --> 00:07:31,460
+ahead and add actually let's not even do it from the database let's go to our
+
+100
+00:07:31,460 --> 00:07:35,780
+API's let's go to our authentication and let's sign up so I'll click run here
+
+101
+00:07:35,780 --> 00:07:39,020
+this is me this is my email that's a password and I'll go ahead and click
+
+102
+00:07:39,020 --> 00:07:44,740
+run and it works we can see here it's going to encrypt that PHI it's going to
+
+103
+00:07:44,740 --> 00:07:48,220
+go ahead and write to the audit log so if I go to my database and I go to my
+
+104
+00:07:48,220 --> 00:07:52,580
+audit log I can see that this is me it of course is going to include this
+
+105
+00:07:52,580 --> 00:07:56,500
+this data as it had now we'll go ahead and remove those from previous sandbox
+
+106
+00:07:56,500 --> 00:08:02,140
+runs we should also be able to see here some of the the the user data that is
+
+107
+00:08:02,140 --> 00:08:06,860
+me signing up I'm gonna go ahead and create myself as a provider real quick so
+
+108
+00:08:06,860 --> 00:08:12,420
+we have the name the email encrypted can't see that personal data let's go
+
+109
+00:08:12,420 --> 00:08:17,500
+ahead and do one additional test we'll go ahead and just simply create a
+
+110
+00:08:17,500 --> 00:08:21,580
+medical record well first let's create a patient huh that's what we should do
+
+111
+00:08:21,580 --> 00:08:26,140
+let's click run and I'll select myself and we'll go ahead and pass in our
+
+112
+00:08:26,140 --> 00:08:30,740
+subject Chris who is so gracious to let us use himself we'll go ahead and click
+
+113
+00:08:30,740 --> 00:08:35,340
+run and we get this data back now everything's been encrypted though we
+
+114
+00:08:35,340 --> 00:08:40,380
+can see here in the functions and written here to our audit so going back
+
+115
+00:08:40,380 --> 00:08:45,780
+to our audit perfect that's a create amazing and we can go and take a look at
+
+116
+00:08:45,780 --> 00:08:50,820
+the patient that we created that is Chris and so we can say that this is
+
+117
+00:08:50,820 --> 00:08:53,700
+working the way that we wanted to be working of course you can do more
+
+118
+00:08:53,700 --> 00:08:57,820
+testing but I want to show you one of the more powerful features that exists
+
+119
+00:08:57,820 --> 00:09:01,180
+here now of course everything here has been powerful so far but I want to show
+
+120
+00:09:01,180 --> 00:09:05,340
+you the review and push so I'm gonna click this button in the top right it's
+
+121
+00:09:05,340 --> 00:09:08,700
+gonna take everything that exists in this ephemeral bit and it's gonna then
+
+122
+00:09:08,700 --> 00:09:13,060
+put it on the actual workspace that we built with our Xano agent so we'll
+
+123
+00:09:13,060 --> 00:09:17,580
+review changes we'll go ahead and take a quick look we have this beautiful diff
+
+124
+00:09:17,580 --> 00:09:22,860
+here allowing us to see all of the changes really just allowing us acting
+
+125
+00:09:22,860 --> 00:09:26,940
+as you know the human in a loop but also just giving us that visualization of
+
+126
+00:09:26,940 --> 00:09:31,220
+anything and everything that's changed and providing that confidence right so
+
+127
+00:09:31,220 --> 00:09:35,300
+let's go ahead and sign off on this we'll say next we're gonna go ahead and
+
+128
+00:09:35,300 --> 00:09:39,540
+push this to branch 2 we have the ability to set it as a live branch but
+
+129
+00:09:39,540 --> 00:09:43,740
+we'll just go ahead and push it here right so pushing it I'll go ahead and
+
+130
+00:09:43,740 --> 00:09:51,260
+deploy and perfect we're no longer in that ephemeral workspace you can see
+
+131
+00:09:51,260 --> 00:09:56,780
+that banner is gone we are now where we want to be if we go to our API's we can
+
+132
+00:09:56,780 --> 00:10:00,740
+go ahead and see that everything exists here but what's important is let's just
+
+133
+00:10:00,740 --> 00:10:05,380
+double take a quick look at our functions our functions exist perfect
+
+134
+00:10:05,380 --> 00:10:11,820
+okay so we have our right and if we go to our crypto perfect and it exists in
+
+135
+00:10:11,820 --> 00:10:16,460
+all these endpoints I will need to go ahead and set these environment variables
+
+136
+00:10:16,460 --> 00:10:20,620
+but ultimately it's assuming more or less that you do have them and if you
+
+137
+00:10:20,620 --> 00:10:25,460
+don't just go back to the Xano ephemeral environment and go ahead and then of
+
+138
+00:10:25,460 --> 00:10:30,980
+course Adam but last but not least it's just the fact that we can go ahead and
+
+139
+00:10:30,980 --> 00:10:36,220
+manage these branches where we can then merge these branches we'll go ahead and
+
+140
+00:10:36,220 --> 00:10:40,260
+select v2 and we're gonna go ahead and choose the destination as v1 which means
+
+141
+00:10:40,260 --> 00:10:45,540
+that now we're gonna go ahead and have everything now I will say that we are
+
+142
+00:10:45,540 --> 00:10:50,780
+looking at destination drafts so we'll go ahead and still include all of these
+
+143
+00:10:50,780 --> 00:10:53,940
+and it what it says isn't able to merge that's not a problem if a source or
+
+144
+00:10:53,940 --> 00:10:58,380
+destination branch contains unpublished drafts we deal we still need to go
+
+145
+00:10:58,380 --> 00:11:03,700
+there simple very easy with what we've done let's go ahead and click on v1
+
+146
+00:11:03,700 --> 00:11:07,940
+let's go ahead and click on this or I should even click on the publish rather
+
+147
+00:11:07,940 --> 00:11:11,340
+I can review and publish these changes so I'll just go ahead and publish them
+
+148
+00:11:11,340 --> 00:11:20,580
+not a problem and I'll go back to v2 and now I'll go back to my manage branch
+
+149
+00:11:20,580 --> 00:11:25,580
+I'm gonna go ahead and merge my branch from v2 to v1 and now I have all of my
+
+150
+00:11:25,580 --> 00:11:30,980
+selections and I'll click merge and now v1 is going to have everything that we
+
+151
+00:11:30,980 --> 00:11:36,340
+just built with the Xano CLI so it's pretty powerful it has a bunch of
+
+152
+00:11:36,340 --> 00:11:39,540
+features that you can go ahead and leverage to build securely confidently
+
+153
+00:11:39,540 --> 00:11:45,780
+and well this is the future this is Xano
+

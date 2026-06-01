@@ -1,0 +1,153 @@
+go ahead and perfect so yeah let's go ahead and get started with the Zano CLI
+and well off the bat it's just a little bit different than the Zano agent now of
+course we're building with an agent and we're also using the Zano developer
+MCP for docs and syntax but it's almost different in every other way you can see
+here we're in our own IDE of choice cursor VS code cloud code and even
+before this I went ahead and authenticated that CLI I downloaded it
+installed it I authenticated my account connected to my instance and what's
+super cool about this is you can connect to any instance so it's not just grab a
+metadata token for each instance and create an MCP server like it used to be
+it's streamlined much much more simple so I have this very big prompt here I'm
+gonna go ahead and send it through and we'll dissect it so what are we doing
+well we're pulling everything in first you'll notice in my local directory I
+don't have any workspace files but that'll change in just a second as it of
+course pulls from my workspace and here we are our API's that we built so our
+medical group our middleware our table so everything that we just built with
+the Zano agent is now here in our CLI now of course we can pull we can push
+and we can do some really cool things with the CLI tool in fact the CLI has a
+bunch of unique feature flags that allow us to do a bunch of very cool things and
+let's go ahead and see what we're doing so before we even begin building I am
+letting the agent know here I have other files go ahead and look through and see
+if you can see Zano script and use those to help build the cool part about this
+being local on my system is that it of course has all these other project files
+so the more information the better decisions it can make but what are we
+actually building that's the question of course well we want to go ahead and
+bring life to that the application that we're building we want to go ahead and
+enhance it right now it doesn't have audit logging and it doesn't have PHI
+encryption so we're gonna go ahead and build that now this prompt is pretty big
+it's you could say verbose but before we even start dissecting it I will say
+regardless of the model you're using whether it's a front-tier model or not
+the more information you give it the better that output so I'm saying add an
+audit log table and also go ahead and add some functions I want an audit slash
+right for that audit log table I want to go ahead and encrypt and decrypt my PHI
+data I want to go ahead and make sure that we're calling this function on
+endpoints touching user patient or medical record data also of course for
+PHI data we're gonna store it in this underscore ENC field and that's just a
+naming convention a suffix we're adding to the column decrypt PHI only when
+building API responses and do not log plain PHI perfect so then I have some
+additional encryption rules and and this is to say that I'm going ahead and
+prompting this in the way that I would go ahead and build I'm catching edge
+cases I'm making sure that it is going to build as well concisely as possible
+so don't generate you know what it doesn't need to go ahead and use plain
+base 64 only do not use base 64 URL and then the same thing more or less for the
+encrypt PHI return null when input is null encrypt with the security dot
+using AES 256 and then you'll see here the environment PHI encryption key
+environment PHI encryption IV perfect that's maybe something that well what
+I'll say is I've included this here because we're able to write environment
+variables to Xano with the CLI tool which is of course an amazing feature
+that hasn't previously existed so now a very hands-off kind of approach when it
+comes to building we can go ahead and write all of our logic our tables but
+also our environment variables that we can use then in our functions so
+continue on with my decrypt PHI saying you know it's gonna operate the same
+way of course and then I have some audit logging rules metadata it needs to be
+JSON don't insert raw text directly into the audit log metadata etc but you'll
+also see seed data rules so what this is really cool and what it's doing is I can
+go ahead and seed data in my push so I'll go ahead and push into a workspace
+but I can include data with it now why is this important well it's important
+especially if we're dealing with a sandbox and that's what we're going to
+be doing we're gonna go ahead and create this and we're gonna push it to our
+sandbox environment meaning it's gonna be ephemeral and it's not gonna touch
+prod it's not gonna touch the live data and it's exciting because what this
+really means is it's an additional layer of security for when we develop whether
+you're a team of engineers or whether you're solo developing if you have an
+application with one user 10,000 users we don't want to push something that
+will break prod and make the experience bad so we have of course this
+safeguard in place a sandbox only mode so we can go ahead and push everything
+to our sandbox now you still absolutely can push directly to prod to the live
+branch if you want to not a problem the CLI fully supports that but what you'll
+notice is that we're including these flags the environment the records the
+dry run we're gonna go ahead and push with no GU IDs we have a bunch of
+different things that I've gone ahead and articulated now I have absolutely
+spoken to the agent to figure out the best prompt and I would recommend doing
+the same rubber ducking with the agent going back and forth and then you know
+if any import fails go ahead and follow these instructions so from beginning to
+end what I'm saying is this is how I think this is how I build go ahead and
+build it like this and as we've been talking that's exactly what it's been
+doing it's been modifying these tables we can see removing and adding it's
+added the audit lock it's gone ahead and created the functions we'll see now it's
+it's been going through these individual endpoints and ensuring that it's been
+adding we can see here our function audit right perfect and even before this
+it just we're changing a bunch right so as we go through all the way down we'll
+also notice let's see here validation has been caught so the CLI is going to
+validate the Xanoscript which is always exciting it doesn't matter if you're
+using a frontier model or not we have the ability to make sure that the code
+that we are going to be testing either in prod or either within the sandbox is
+going to be valid and that's what we're seeing here yeah the human in the loop
+still 100% yep absolutely very important we're able to catch it of course and
+look how fast it just brings up our sandbox environment now I want to go
+back real quick here to our IDE it's because it's still gonna be thinking and
+let's see so it succeeded the review session opened I'm doing one quick
+pullback check from the sandbox so I can confirm what the sandbox now contains
+before I wrap up then I might catch another thing and then of course push
+another bit but it does let us know everything that's done added the
+autolog added the functions added the plain text phi encryption key and
+encryption environment and variable so if we go back here click on our keys
+here are environment variables that didn't exist when we were creating with
+the Xano agent but that do now with of course the CLI tool what I want to go
+and see is our data here we don't have any user data it looks like we do have
+patient data perfect medical record etc so let's do something here let's go
+ahead and add actually let's not even do it from the database let's go to our
+API's let's go to our authentication and let's sign up so I'll click run here
+this is me this is my email that's a password and I'll go ahead and click
+run and it works we can see here it's going to encrypt that PHI it's going to
+go ahead and write to the audit log so if I go to my database and I go to my
+audit log I can see that this is me it of course is going to include this
+this data as it had now we'll go ahead and remove those from previous sandbox
+runs we should also be able to see here some of the the the user data that is
+me signing up I'm gonna go ahead and create myself as a provider real quick so
+we have the name the email encrypted can't see that personal data let's go
+ahead and do one additional test we'll go ahead and just simply create a
+medical record well first let's create a patient huh that's what we should do
+let's click run and I'll select myself and we'll go ahead and pass in our
+subject Chris who is so gracious to let us use himself we'll go ahead and click
+run and we get this data back now everything's been encrypted though we
+can see here in the functions and written here to our audit so going back
+to our audit perfect that's a create amazing and we can go and take a look at
+the patient that we created that is Chris and so we can say that this is
+working the way that we wanted to be working of course you can do more
+testing but I want to show you one of the more powerful features that exists
+here now of course everything here has been powerful so far but I want to show
+you the review and push so I'm gonna click this button in the top right it's
+gonna take everything that exists in this ephemeral bit and it's gonna then
+put it on the actual workspace that we built with our Xano agent so we'll
+review changes we'll go ahead and take a quick look we have this beautiful diff
+here allowing us to see all of the changes really just allowing us acting
+as you know the human in a loop but also just giving us that visualization of
+anything and everything that's changed and providing that confidence right so
+let's go ahead and sign off on this we'll say next we're gonna go ahead and
+push this to branch 2 we have the ability to set it as a live branch but
+we'll just go ahead and push it here right so pushing it I'll go ahead and
+deploy and perfect we're no longer in that ephemeral workspace you can see
+that banner is gone we are now where we want to be if we go to our API's we can
+go ahead and see that everything exists here but what's important is let's just
+double take a quick look at our functions our functions exist perfect
+okay so we have our right and if we go to our crypto perfect and it exists in
+all these endpoints I will need to go ahead and set these environment variables
+but ultimately it's assuming more or less that you do have them and if you
+don't just go back to the Xano ephemeral environment and go ahead and then of
+course Adam but last but not least it's just the fact that we can go ahead and
+manage these branches where we can then merge these branches we'll go ahead and
+select v2 and we're gonna go ahead and choose the destination as v1 which means
+that now we're gonna go ahead and have everything now I will say that we are
+looking at destination drafts so we'll go ahead and still include all of these
+and it what it says isn't able to merge that's not a problem if a source or
+destination branch contains unpublished drafts we deal we still need to go
+there simple very easy with what we've done let's go ahead and click on v1
+let's go ahead and click on this or I should even click on the publish rather
+I can review and publish these changes so I'll just go ahead and publish them
+not a problem and I'll go back to v2 and now I'll go back to my manage branch
+I'm gonna go ahead and merge my branch from v2 to v1 and now I have all of my
+selections and I'll click merge and now v1 is going to have everything that we
+just built with the Xano CLI so it's pretty powerful it has a bunch of
+features that you can go ahead and leverage to build securely confidently
+and well this is the future this is Xano

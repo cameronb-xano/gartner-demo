@@ -1,0 +1,154 @@
+start	end	text
+0	8840	go ahead and perfect so yeah let's go ahead and get started with the Zano CLI
+8840	13480	and well off the bat it's just a little bit different than the Zano agent now of
+13480	17320	course we're building with an agent and we're also using the Zano developer
+17320	21760	MCP for docs and syntax but it's almost different in every other way you can see
+21760	26880	here we're in our own IDE of choice cursor VS code cloud code and even
+26880	30520	before this I went ahead and authenticated that CLI I downloaded it
+30520	34280	installed it I authenticated my account connected to my instance and what's
+34280	38600	super cool about this is you can connect to any instance so it's not just grab a
+38600	42360	metadata token for each instance and create an MCP server like it used to be
+42360	47000	it's streamlined much much more simple so I have this very big prompt here I'm
+47000	51240	gonna go ahead and send it through and we'll dissect it so what are we doing
+51240	55120	well we're pulling everything in first you'll notice in my local directory I
+55120	59880	don't have any workspace files but that'll change in just a second as it of
+59880	64540	course pulls from my workspace and here we are our API's that we built so our
+64540	68600	medical group our middleware our table so everything that we just built with
+68600	74480	the Zano agent is now here in our CLI now of course we can pull we can push
+74480	78560	and we can do some really cool things with the CLI tool in fact the CLI has a
+78560	83200	bunch of unique feature flags that allow us to do a bunch of very cool things and
+83200	87440	let's go ahead and see what we're doing so before we even begin building I am
+87440	92680	letting the agent know here I have other files go ahead and look through and see
+92680	97200	if you can see Zano script and use those to help build the cool part about this
+97200	102000	being local on my system is that it of course has all these other project files
+102000	106040	so the more information the better decisions it can make but what are we
+106040	110320	actually building that's the question of course well we want to go ahead and
+110320	113720	bring life to that the application that we're building we want to go ahead and
+113720	117520	enhance it right now it doesn't have audit logging and it doesn't have PHI
+117520	121840	encryption so we're gonna go ahead and build that now this prompt is pretty big
+121840	127080	it's you could say verbose but before we even start dissecting it I will say
+127080	130400	regardless of the model you're using whether it's a front-tier model or not
+130400	135440	the more information you give it the better that output so I'm saying add an
+135440	139360	audit log table and also go ahead and add some functions I want an audit slash
+139360	143920	right for that audit log table I want to go ahead and encrypt and decrypt my PHI
+143920	147320	data I want to go ahead and make sure that we're calling this function on
+147320	152560	endpoints touching user patient or medical record data also of course for
+152560	157840	PHI data we're gonna store it in this underscore ENC field and that's just a
+157840	162160	naming convention a suffix we're adding to the column decrypt PHI only when
+162160	168960	building API responses and do not log plain PHI perfect so then I have some
+168960	172480	additional encryption rules and and this is to say that I'm going ahead and
+172480	175520	prompting this in the way that I would go ahead and build I'm catching edge
+175520	180160	cases I'm making sure that it is going to build as well concisely as possible
+180160	184760	so don't generate you know what it doesn't need to go ahead and use plain
+184760	191280	base 64 only do not use base 64 URL and then the same thing more or less for the
+191280	196260	encrypt PHI return null when input is null encrypt with the security dot
+196460	203060	using AES 256 and then you'll see here the environment PHI encryption key
+203060	210580	environment PHI encryption IV perfect that's maybe something that well what
+210580	214580	I'll say is I've included this here because we're able to write environment
+214580	219540	variables to Xano with the CLI tool which is of course an amazing feature
+219540	225060	that hasn't previously existed so now a very hands-off kind of approach when it
+225060	229340	comes to building we can go ahead and write all of our logic our tables but
+229340	233980	also our environment variables that we can use then in our functions so
+233980	237500	continue on with my decrypt PHI saying you know it's gonna operate the same
+237500	241860	way of course and then I have some audit logging rules metadata it needs to be
+241860	247260	JSON don't insert raw text directly into the audit log metadata etc but you'll
+247260	251780	also see seed data rules so what this is really cool and what it's doing is I can
+251780	255700	go ahead and seed data in my push so I'll go ahead and push into a workspace
+255700	260500	but I can include data with it now why is this important well it's important
+260500	264620	especially if we're dealing with a sandbox and that's what we're going to
+264620	267980	be doing we're gonna go ahead and create this and we're gonna push it to our
+267980	271220	sandbox environment meaning it's gonna be ephemeral and it's not gonna touch
+271220	276020	prod it's not gonna touch the live data and it's exciting because what this
+276020	280500	really means is it's an additional layer of security for when we develop whether
+280500	283780	you're a team of engineers or whether you're solo developing if you have an
+283780	287740	application with one user 10,000 users we don't want to push something that
+287740	292580	will break prod and make the experience bad so we have of course this
+292580	296380	safeguard in place a sandbox only mode so we can go ahead and push everything
+296380	302300	to our sandbox now you still absolutely can push directly to prod to the live
+302300	307940	branch if you want to not a problem the CLI fully supports that but what you'll
+307940	312460	notice is that we're including these flags the environment the records the
+312460	316620	dry run we're gonna go ahead and push with no GU IDs we have a bunch of
+316620	320660	different things that I've gone ahead and articulated now I have absolutely
+320660	324980	spoken to the agent to figure out the best prompt and I would recommend doing
+324980	329500	the same rubber ducking with the agent going back and forth and then you know
+329500	334620	if any import fails go ahead and follow these instructions so from beginning to
+334660	338500	end what I'm saying is this is how I think this is how I build go ahead and
+338500	342540	build it like this and as we've been talking that's exactly what it's been
+342540	347740	doing it's been modifying these tables we can see removing and adding it's
+347740	351940	added the audit lock it's gone ahead and created the functions we'll see now it's
+351940	355580	it's been going through these individual endpoints and ensuring that it's been
+355580	361460	adding we can see here our function audit right perfect and even before this
+361460	366700	it just we're changing a bunch right so as we go through all the way down we'll
+366700	372140	also notice let's see here validation has been caught so the CLI is going to
+372140	375780	validate the Xanoscript which is always exciting it doesn't matter if you're
+375780	379780	using a frontier model or not we have the ability to make sure that the code
+379780	384300	that we are going to be testing either in prod or either within the sandbox is
+384300	392980	going to be valid and that's what we're seeing here yeah the human in the loop
+392980	397860	still 100% yep absolutely very important we're able to catch it of course and
+397860	402500	look how fast it just brings up our sandbox environment now I want to go
+402500	406380	back real quick here to our IDE it's because it's still gonna be thinking and
+406380	410300	let's see so it succeeded the review session opened I'm doing one quick
+410300	414180	pullback check from the sandbox so I can confirm what the sandbox now contains
+414180	417820	before I wrap up then I might catch another thing and then of course push
+417820	421540	another bit but it does let us know everything that's done added the
+421540	424980	autolog added the functions added the plain text phi encryption key and
+424980	428380	encryption environment and variable so if we go back here click on our keys
+428380	432340	here are environment variables that didn't exist when we were creating with
+432340	437380	the Xano agent but that do now with of course the CLI tool what I want to go
+437380	442700	and see is our data here we don't have any user data it looks like we do have
+442700	446780	patient data perfect medical record etc so let's do something here let's go
+446780	451460	ahead and add actually let's not even do it from the database let's go to our
+451460	455780	API's let's go to our authentication and let's sign up so I'll click run here
+455780	459020	this is me this is my email that's a password and I'll go ahead and click
+459020	464740	run and it works we can see here it's going to encrypt that PHI it's going to
+464740	468220	go ahead and write to the audit log so if I go to my database and I go to my
+468220	472580	audit log I can see that this is me it of course is going to include this
+472580	476500	this data as it had now we'll go ahead and remove those from previous sandbox
+476500	482140	runs we should also be able to see here some of the the the user data that is
+482140	486860	me signing up I'm gonna go ahead and create myself as a provider real quick so
+486860	492420	we have the name the email encrypted can't see that personal data let's go
+492420	497500	ahead and do one additional test we'll go ahead and just simply create a
+497500	501580	medical record well first let's create a patient huh that's what we should do
+501580	506140	let's click run and I'll select myself and we'll go ahead and pass in our
+506140	510740	subject Chris who is so gracious to let us use himself we'll go ahead and click
+510740	515340	run and we get this data back now everything's been encrypted though we
+515340	520380	can see here in the functions and written here to our audit so going back
+520380	525780	to our audit perfect that's a create amazing and we can go and take a look at
+525780	530820	the patient that we created that is Chris and so we can say that this is
+530820	533700	working the way that we wanted to be working of course you can do more
+533700	537820	testing but I want to show you one of the more powerful features that exists
+537820	541180	here now of course everything here has been powerful so far but I want to show
+541180	545340	you the review and push so I'm gonna click this button in the top right it's
+545340	548700	gonna take everything that exists in this ephemeral bit and it's gonna then
+548700	553060	put it on the actual workspace that we built with our Xano agent so we'll
+553060	557580	review changes we'll go ahead and take a quick look we have this beautiful diff
+557580	562860	here allowing us to see all of the changes really just allowing us acting
+562860	566940	as you know the human in a loop but also just giving us that visualization of
+566940	571220	anything and everything that's changed and providing that confidence right so
+571220	575300	let's go ahead and sign off on this we'll say next we're gonna go ahead and
+575300	579540	push this to branch 2 we have the ability to set it as a live branch but
+579540	583740	we'll just go ahead and push it here right so pushing it I'll go ahead and
+583740	591260	deploy and perfect we're no longer in that ephemeral workspace you can see
+591260	596780	that banner is gone we are now where we want to be if we go to our API's we can
+596780	600740	go ahead and see that everything exists here but what's important is let's just
+600740	605380	double take a quick look at our functions our functions exist perfect
+605380	611820	okay so we have our right and if we go to our crypto perfect and it exists in
+611820	616460	all these endpoints I will need to go ahead and set these environment variables
+616460	620620	but ultimately it's assuming more or less that you do have them and if you
+620620	625460	don't just go back to the Xano ephemeral environment and go ahead and then of
+625460	630980	course Adam but last but not least it's just the fact that we can go ahead and
+630980	636220	manage these branches where we can then merge these branches we'll go ahead and
+636220	640260	select v2 and we're gonna go ahead and choose the destination as v1 which means
+640260	645540	that now we're gonna go ahead and have everything now I will say that we are
+645540	650780	looking at destination drafts so we'll go ahead and still include all of these
+650780	653940	and it what it says isn't able to merge that's not a problem if a source or
+653940	658380	destination branch contains unpublished drafts we deal we still need to go
+658380	663700	there simple very easy with what we've done let's go ahead and click on v1
+663700	667940	let's go ahead and click on this or I should even click on the publish rather
+667940	671340	I can review and publish these changes so I'll just go ahead and publish them
+671340	680580	not a problem and I'll go back to v2 and now I'll go back to my manage branch
+680580	685580	I'm gonna go ahead and merge my branch from v2 to v1 and now I have all of my
+685580	690980	selections and I'll click merge and now v1 is going to have everything that we
+690980	696340	just built with the Xano CLI so it's pretty powerful it has a bunch of
+696340	699540	features that you can go ahead and leverage to build securely confidently
+699540	705780	and well this is the future this is Xano
