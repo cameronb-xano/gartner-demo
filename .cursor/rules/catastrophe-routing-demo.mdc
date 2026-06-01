@@ -47,7 +47,7 @@ There is no agent-run runtime testing in this demo flow.
 
 1. Apply the embedded canonical XS below to `rules_decisioning/api/rules/decisions_evaluate_post.xs`.
 2. Validate XanoScript using the configured Xano validation tooling. If using MCP, read the MCP tool schema only as required and do not narrate schema/docs discovery.
-3. Push the `rules_decisioning` directory directly to ephemeral sandbox review with `xano sandbox push -d "rules_decisioning" -p "${XANO_RULES_PROFILE:-Gartner Demo Rules}" --force --review`.
+3. Push the `rules_decisioning` directory directly to ephemeral sandbox review with `xano sandbox push -d "rules_decisioning" -p "${XANO_RULES_PROFILE:-default}" --force --review`.
 4. Stop. Tell the user the XS validated and the change is in ephemeral sandbox for review.
 
 Do not run runtime tests. Do not click, curl, or exercise claim 99. The user owns all behavior checks in the frontend and sandbox review UI.

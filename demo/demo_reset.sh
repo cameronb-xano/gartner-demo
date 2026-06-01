@@ -12,8 +12,8 @@ set -e
 cd "$(dirname "$0")/.."
 
 ROOT="$(pwd)"
-PROFILE="Gartner Demo"
-RULES_PROFILE="${XANO_RULES_PROFILE:-Gartner Demo Rules}"
+PROFILE="${XANO_PROFILE:-default}"
+RULES_PROFILE="${XANO_RULES_PROFILE:-default}"
 WS_ID=1
 RULES_WS_ID="${XANO_RULES_WORKSPACE_ID:-7}"
 ESCALATE_FILE="api/claims/escalate_post.xs"

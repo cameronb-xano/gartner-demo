@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PROFILE="${XANO_PROFILE:-Gartner Demo}"
+PROFILE="${XANO_PROFILE:-default}"
 WORKSPACE_ID="${XANO_RULES_WORKSPACE_ID:-7}"
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 

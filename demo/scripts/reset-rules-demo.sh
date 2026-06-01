@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PROFILE="${XANO_PROFILE:-Gartner Demo}"
-RULES_PROFILE="${XANO_RULES_PROFILE:-Gartner Demo Rules}"
+PROFILE="${XANO_PROFILE:-default}"
+RULES_PROFILE="${XANO_RULES_PROFILE:-default}"
 WORKSPACE_ID="${XANO_RULES_WORKSPACE_ID:-7}"
 CLAIMS_WORKSPACE_ID="${XANO_CLAIMS_WORKSPACE_ID:-1}"
 BASE_URL="${GARTNER_BASE_URL:-https://xjik-uiot-gpzk.n7d.xano.io}"

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-BASE_PROFILE="${XANO_PROFILE:-Gartner Demo}"
-PROFILE="${XANO_RULES_PROFILE:-Gartner Demo Rules}"
+BASE_PROFILE="${XANO_PROFILE:-default}"
+PROFILE="${XANO_RULES_PROFILE:-default}"
 WORKSPACE_ID="${XANO_RULES_WORKSPACE_ID:-7}"
 CONFIG_PATH="${XANO_CONFIG:-$HOME/.xano/credentials.yaml}"
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"

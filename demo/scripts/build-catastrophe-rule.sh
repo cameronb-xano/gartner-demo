@@ -4,7 +4,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-RULES_PROFILE="${XANO_RULES_PROFILE:-Gartner Demo Rules}"
+RULES_PROFILE="${XANO_RULES_PROFILE:-default}"
 
 echo "=== Catastrophe rule demo build (sandbox only) ==="
 echo

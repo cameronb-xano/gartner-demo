@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PROFILE="${XANO_PROFILE:-Gartner Demo}"
+PROFILE="${XANO_PROFILE:-default}"
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 SOURCE_DIR="$ROOT_DIR/tickets_and_claims"
 STAGE_DIR="$(mktemp -d "${TMPDIR:-/tmp}/xano-escalate-sandbox.XXXXXX")"
