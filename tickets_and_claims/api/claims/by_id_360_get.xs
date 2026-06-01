@@ -130,7 +130,7 @@ query "claims/{claim_id}/360" verb=GET {
     try_catch {
       try {
         api.request {
-          url = "https://xjik-uiot-gpzk.n7d.xano.io/api:gartner-rules-decisioning/decisions/evaluate"
+          url = "https://x5oh-bynb-yevw.n7d.xano.io/api:gartner-rules-decisioning/decisions/evaluate"
           method = "POST"
           params = {
             claim_id: $claim.id,
@@ -156,7 +156,7 @@ query "claims/{claim_id}/360" verb=GET {
     try_catch {
       try {
         api.request {
-          url = ("https://xjik-uiot-gpzk.n7d.xano.io/api:gartner-escalation-payouts/payouts?claim_ref=" ~ $claim.claim_number)
+          url = ("https://x5oh-bynb-yevw.n7d.xano.io/api:gartner-escalation-payouts/payouts?claim_ref=" ~ $claim.claim_number)
           method = "GET"
           headers = ["Content-Type: application/json"]
           timeout = 10

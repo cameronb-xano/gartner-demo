@@ -11,7 +11,7 @@ function "create_payout_invoice" {
     try_catch {
       try {
         api.request {
-          url = "https://xjik-uiot-gpzk.n7d.xano.io/api:gartner-billing/invoices"
+          url = "https://x5oh-bynb-yevw.n7d.xano.io/api:gartner-billing/invoices"
           method = "POST"
           params = {
             customer_id: $input.customer_id,

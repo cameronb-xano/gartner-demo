@@ -16,7 +16,7 @@ import requests
 
 BASE = os.environ.get(
     "GARTNER_BASE_URL",
-    "https://xjik-uiot-gpzk.n7d.xano.io",
+    "https://x5oh-bynb-yevw.n7d.xano.io",
 )
 
 URLS = {

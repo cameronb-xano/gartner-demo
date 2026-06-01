@@ -8,10 +8,10 @@
 set -e
 
 CLAIM_ID="${1:-1}"
-TICK="https://xjik-uiot-gpzk.n7d.xano.io/api:gartner-claims"
-TICK_AUTH="https://xjik-uiot-gpzk.n7d.xano.io/api:gartner-claims-auth"
-PROF="https://xjik-uiot-gpzk.n7d.xano.io/api:gartner-profiling"
-NOTIFY="https://xjik-uiot-gpzk.n7d.xano.io/api:gartner-notify"
+TICK="https://x5oh-bynb-yevw.n7d.xano.io/api:gartner-claims"
+TICK_AUTH="https://x5oh-bynb-yevw.n7d.xano.io/api:gartner-claims-auth"
+PROF="https://x5oh-bynb-yevw.n7d.xano.io/api:gartner-profiling"
+NOTIFY="https://x5oh-bynb-yevw.n7d.xano.io/api:gartner-notify"
 
 # Reuse demo agent if exists, otherwise create
 TOKEN=$(curl -s -X POST "${TICK_AUTH}/login" -H "Content-Type: application/json" \

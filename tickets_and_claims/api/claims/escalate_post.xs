@@ -125,7 +125,7 @@ query "claims/{claim_id}/escalate" verb=POST {
     try_catch {
       try {
         api.request {
-          url = "https://xjik-uiot-gpzk.n7d.xano.io/api:gartner-rules-decisioning/decisions/evaluate"
+          url = "https://x5oh-bynb-yevw.n7d.xano.io/api:gartner-rules-decisioning/decisions/evaluate"
           method = "POST"
           params = {
             claim_id: $claim.id,
@@ -227,7 +227,7 @@ query "claims/{claim_id}/escalate" verb=POST {
     try_catch {
       try {
         api.request {
-          url = "https://xjik-uiot-gpzk.n7d.xano.io/api:gartner-escalation-payouts/events"
+          url = "https://x5oh-bynb-yevw.n7d.xano.io/api:gartner-escalation-payouts/events"
           method = "POST"
           params = {
             claim_id: $claim.id,

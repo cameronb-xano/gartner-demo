@@ -10,7 +10,7 @@ function "record_customer_event" {
     try_catch {
       try {
         api.request {
-          url = "https://xjik-uiot-gpzk.n7d.xano.io/api:gartner-profiling/events"
+          url = "https://x5oh-bynb-yevw.n7d.xano.io/api:gartner-profiling/events"
           method = "POST"
           params = {
             customer_id: $input.customer_id,

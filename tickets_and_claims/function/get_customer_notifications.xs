@@ -9,7 +9,7 @@ function "get_customer_notifications" {
     try_catch {
       try {
         api.request {
-          url = "https://xjik-uiot-gpzk.n7d.xano.io/api:gartner-notify/notifications"
+          url = "https://x5oh-bynb-yevw.n7d.xano.io/api:gartner-notify/notifications"
           method = "GET"
           params = { customer_id: $input.customer_id, per_page: $input.per_page }
           headers = ["Content-Type: application/json"]
