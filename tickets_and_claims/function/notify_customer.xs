@@ -14,7 +14,7 @@ function "notify_customer" {
     try_catch {
       try {
         api.request {
-          url = "https://x5oh-bynb-yevw.n7d.xano.io/api:gartner-notify/send"
+          url = "https://xjik-uiot-gpzk.n7d.xano.io/api:gartner-notify/send"
           method = "POST"
           params = {
             customer_id: $input.customer_id,

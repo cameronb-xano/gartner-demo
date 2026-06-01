@@ -1,7 +1,7 @@
 import type { AuthSession } from "../types/demo";
 
 const baseUrl =
-  import.meta.env.VITE_XANO_BASE_URL ?? "https://x5oh-bynb-yevw.n7d.xano.io";
+  import.meta.env.VITE_XANO_BASE_URL ?? "https://xjik-uiot-gpzk.n7d.xano.io";
 
 type LoginInput = {
   email: string;

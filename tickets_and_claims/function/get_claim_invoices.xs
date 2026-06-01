@@ -8,7 +8,7 @@ function "get_claim_invoices" {
     try_catch {
       try {
         api.request {
-          url = "https://x5oh-bynb-yevw.n7d.xano.io/api:gartner-billing/invoices"
+          url = "https://xjik-uiot-gpzk.n7d.xano.io/api:gartner-billing/invoices"
           method = "GET"
           params = { claim_ref: $input.claim_ref }
           headers = ["Content-Type: application/json"]

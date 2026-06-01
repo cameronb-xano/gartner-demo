@@ -45,5 +45,5 @@ echo "  # 3. Open the sandbox review/promote screen in browser"
 echo "  xano sandbox review -p '$PROFILE'"
 echo
 echo "  # 4. After clicking 'Promote' in the browser, hit the new endpoint:"
-echo "  curl -s 'https://x5oh-bynb-yevw.n7d.xano.io/api:gartner-claims/claims/stats' \\"
+echo "  curl -s 'https://xjik-uiot-gpzk.n7d.xano.io/api:gartner-claims/claims/stats' \\"
 echo "       -H 'Authorization: Bearer YOUR_TOKEN' | python3 -m json.tool"

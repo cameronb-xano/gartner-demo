@@ -8,7 +8,7 @@ function "get_customer_profile" {
     try_catch {
       try {
         api.request {
-          url = ("https://x5oh-bynb-yevw.n7d.xano.io/api:gartner-profiling/customers/" ~ ($input.customer_id|to_text))
+          url = ("https://xjik-uiot-gpzk.n7d.xano.io/api:gartner-profiling/customers/" ~ ($input.customer_id|to_text))
           method = "GET"
           headers = ["Content-Type: application/json"]
           timeout = 10

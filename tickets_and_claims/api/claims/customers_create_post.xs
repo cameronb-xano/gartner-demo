@@ -36,7 +36,7 @@ query "customers" verb=POST {
     try_catch {
       try {
         api.request {
-          url = "https://x5oh-bynb-yevw.n7d.xano.io/api:gartner-profiling/customers"
+          url = "https://xjik-uiot-gpzk.n7d.xano.io/api:gartner-profiling/customers"
           method = "POST"
           params = {
             first_name: $input.first_name,

@@ -19,7 +19,7 @@ npm run dev
 Copy `.env.example` to `.env.local` if you want to change the API target.
 
 ```bash
-VITE_XANO_BASE_URL=https://x5oh-bynb-yevw.n7d.xano.io
+VITE_XANO_BASE_URL=https://xjik-uiot-gpzk.n7d.xano.io
 VITE_DEMO_MODE=true
 ```
 

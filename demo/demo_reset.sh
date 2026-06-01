@@ -19,7 +19,7 @@ RULES_WS_ID="${XANO_RULES_WORKSPACE_ID:-7}"
 ESCALATE_FILE="api/claims/escalate_post.xs"
 BASELINE_RULES="demo/baseline/rules_decisioning/api/rules/decisions_evaluate_post.xs"
 ACTIVE_RULES="rules_decisioning/api/rules/decisions_evaluate_post.xs"
-BASE_URL="${GARTNER_BASE_URL:-https://x5oh-bynb-yevw.n7d.xano.io}"
+BASE_URL="${GARTNER_BASE_URL:-https://xjik-uiot-gpzk.n7d.xano.io}"
 
 echo "→ Verifying local escalate file is present..."
 if [ ! -f "tickets_and_claims/${ESCALATE_FILE}" ]; then
